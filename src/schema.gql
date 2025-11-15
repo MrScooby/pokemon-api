@@ -1,0 +1,143 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthResponse {
+  """JWT access token"""
+  accessToken: String!
+
+  """User information"""
+  user: User!
+}
+
+input CreatePokemonInput {
+  height: Float!
+  image: String!
+  name: String!
+  weight: Float!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input LoginInput {
+  password: String!
+  username: String!
+}
+
+type Mutation {
+  createPokemon(input: CreatePokemonInput!): Pokemon!
+  deletePokemon(id: ID!): Boolean!
+  login(input: LoginInput!): AuthResponse!
+  register(input: RegisterInput!): AuthResponse!
+  updatePokemon(id: ID!, input: UpdatePokemonInput!): Pokemon
+}
+
+type PaginatedPokemon {
+  """List of items"""
+  items: [Pokemon!]!
+
+  """Pagination information"""
+  pagination: PaginationInfo!
+}
+
+type PaginationInfo {
+  """Current page number"""
+  currentPage: Int!
+
+  """Whether there is a next page"""
+  hasNextPage: Boolean!
+
+  """Whether there is a previous page"""
+  hasPrevPage: Boolean!
+
+  """Items per page"""
+  limit: Int!
+
+  """Total number of items"""
+  totalItems: Int!
+
+  """Total number of pages"""
+  totalPages: Int!
+}
+
+input PaginationInput {
+  """Number of items per page"""
+  limit: Int! = 10
+
+  """Page number (starts from 1)"""
+  page: Int! = 1
+}
+
+type Pokemon {
+  """When the Pokemon was created"""
+  createdAt: DateTime!
+
+  """Height of the Pokemon in meters"""
+  height: Float!
+
+  """Unique identifier for the Pokemon"""
+  id: ID!
+
+  """Image URL of the Pokemon"""
+  image: String!
+
+  """Name of the Pokemon"""
+  name: String!
+
+  """When the Pokemon was last updated"""
+  updatedAt: DateTime!
+
+  """Weight of the Pokemon in kilograms"""
+  weight: Float!
+}
+
+input PokemonFilter {
+  height: RangeFilter
+  name: String
+  weight: RangeFilter
+}
+
+input PokemonQueryInput {
+  filter: PokemonFilter
+  pagination: PaginationInput
+}
+
+type Query {
+  getAllPokemon(query: PokemonQueryInput): PaginatedPokemon!
+  getPokemon(id: ID!): Pokemon
+  me: User!
+}
+
+input RangeFilter {
+  max: Float
+  min: Float
+}
+
+input RegisterInput {
+  password: String!
+  username: String!
+}
+
+input UpdatePokemonInput {
+  height: Float
+  image: String
+  name: String
+  weight: Float
+}
+
+type User {
+  """When the user was created"""
+  createdAt: DateTime!
+
+  """Unique identifier for the user"""
+  id: ID!
+
+  """When the user was last updated"""
+  updatedAt: DateTime!
+
+  """Username of the user"""
+  username: String!
+}
